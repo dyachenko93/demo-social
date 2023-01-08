@@ -1,5 +1,18 @@
 .item {
+  position: relative;
   color: aqua;
+}
+
+.item .deleteButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 20px;
+  height: 20px;
+}
+
+.item .deleteButton:after {
+  content: "\274C";
 }
 
 .item img {

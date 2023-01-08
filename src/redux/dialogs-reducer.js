@@ -24,7 +24,7 @@ const dialogsReducer = (state = initial, action) => {
   switch (action.type) {
     case ADD_MESSAGE: {
       let newMessage = {
-        id: 7,
+        id: state.messages.slice(-1)[0].id,
         text: action.message,
         isMy: true,
         isUnread: true

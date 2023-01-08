@@ -43,7 +43,7 @@ const MyPosts = React.memo(props => {
   })
 
   let postsElements = [...props.posts].reverse().map((post, i) =>
-    <Post key={"post_" + i} message={post.text} likesCount={post.likesCount} />
+    <Post key={"post_" + i} post={post} deletePost={props.deletePost} />
   )
 
   return (
