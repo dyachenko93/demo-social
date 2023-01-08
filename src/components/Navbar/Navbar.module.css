@@ -1,0 +1,23 @@
+.nav {
+  grid-area: n;
+  background-color: burlywood;
+  padding: 20px;
+}
+
+.item a {
+  font-size: 24px;
+  color: white;
+  text-decoration: none;
+}
+
+.item a.activeLink {
+  color: red;
+}
+
+.friendsBlock {
+  display: flex;
+}
+
+.friendsBlock > div {
+  margin: 10px;
+}

@@ -1,0 +1,33 @@
+.pagination {
+  padding: 20px;
+  margin:auto;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination span {
+  padding: 10px;
+  cursor:pointer;
+}
+
+.pagination span.selectedPage {
+  font-weight: bold;
+  cursor: default;
+}
+
+
+/***************************************/
+
+.paginator {
+  margin: 10px;
+}
+
+.pageNumber {
+  padding: 2px;
+  border: 1px solid grey;
+}
+
+.pageNumber.selectedPage {
+  font-weight: bold;
+  border-color: black;
+}

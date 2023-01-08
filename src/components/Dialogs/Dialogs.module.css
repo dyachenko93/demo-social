@@ -1,0 +1,35 @@
+.dialogs {
+  display: grid;
+  grid-template-columns: 2fr 10fr;
+  
+}
+
+.dialogsItems {
+  padding: 10px;
+}
+
+.dialog.active a {
+  color: gold;
+}
+
+.dialog.unreadDialog a {
+  font-weight: bold;
+}
+
+.messages {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  color: white;
+}
+
+.unreadMessage {
+  font-weight: bold;
+}
+
+.myMessage {
+  margin-left: auto;
+}
