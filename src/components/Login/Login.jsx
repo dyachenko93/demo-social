@@ -5,18 +5,20 @@ import { required } from '../../utils/validators/validators';
 import { Navigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 
-const LoginForm = ({onSubmit, authError}) => {
+const LoginForm = ({onSubmit, authError,captchaUrl}) => {
   const validate = (values) => {
     const loginError = required(values.login)
     const passError = required(values.password)
-    if(loginError || passError)
-      return { login : loginError, password: passError }
+    const captchaError = captchaUrl && required(values.captcha)
+    if(loginError || passError || captchaError)
+      return { login : loginError, password: passError, captcha: captchaError }
     return undefined
   }
   const formik = useFormik ({
     initialValues: {
       login: '',
-      password: ''
+      password: '',
+      captcha: ''
     },
     validate,
     onSubmit: onSubmit
@@ -32,6 +34,13 @@ const LoginForm = ({onSubmit, authError}) => {
       <div>
         <Input name={'rememberMe'} type='checkbox' formik={formik} label='Remember Me'/>
       </div>
+      {captchaUrl && <>
+          <img src={captchaUrl} alt='captcha' />
+          <div>
+            <Input name={'captcha'} type='text' formik={formik} />
+          </div>
+        </>
+      }
       {authError &&
         <div className={s.formSummaryError}>
           {authError}
@@ -46,15 +55,15 @@ const LoginForm = ({onSubmit, authError}) => {
 
 const Login = (props) => {
   const loginUser = (formData) => {
-    let { login, password, rememberMe } = formData
-    props.login(login, password, rememberMe)
+    let { login, password, rememberMe, captcha } = formData
+    props.login(login, password, rememberMe, captcha)
   }
 
   if (props.state.isAuth) return <Navigate to={'/profile'} />
 
   return <div>
     <h1>LOGIN</h1>
-    <LoginForm authError={props.state.authError} onSubmit={loginUser} />
+    <LoginForm authError={props.state.authError} captchaUrl={props.state.captchaUrl} onSubmit={loginUser} />
   </div>
 }
 
