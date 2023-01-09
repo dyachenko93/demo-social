@@ -20,13 +20,14 @@ const FormControl = ({ formik, name, children, ...props }) => {
 export const Textarea = (props) => {
   const { formik, name, ...restProps } = props
   return <FormControl {...props}>
-      <textarea value={formik.values[name]} onChange={formik.handleChange} name={name} {...restProps} />
+      <textarea value={formik.values[name]} onChange={formik.handleChange} id={name} name={name} {...restProps} />
     </FormControl>
 }
 
 export const Input = (props) => {
-  const { formik, name, ...restProps } = props
+  const { formik, name, label, ...restProps } = props
   return <FormControl {...props}>
-        <input value={formik.values[name]} onChange={formik.handleChange} name={name} {...restProps} />
+        <input value={formik.values[name]} onChange={formik.handleChange} id={name} name={name} {...restProps} />
+        {label && <label htmlFor={name}>{label}</label>}
     </FormControl>
 }

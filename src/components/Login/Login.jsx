@@ -30,7 +30,7 @@ const LoginForm = ({onSubmit, authError}) => {
         <Input name={'password'} type='password' placeholder={'Password'} formik={formik}  />
       </div>
       <div>
-        {/* <label><Field component={'input'} name={'rememberMe'} type='checkbox' />remember me</label> */}
+        <Input name={'rememberMe'} type='checkbox' formik={formik} label='Remember Me'/>
       </div>
       {authError &&
         <div className={s.formSummaryError}>

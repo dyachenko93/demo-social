@@ -62,5 +62,9 @@ export const profileApi = {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
       .then(response => response.data)
+  },
+  saveProfile(data) {
+    return instance.put(`/profile`, data)
+      .then(response => response.data)
   }
 }

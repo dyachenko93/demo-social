@@ -16,3 +16,12 @@
 .bgImg img {
   width: 100%;
 }
+
+.contact {
+  padding-left: 10px;
+}
+
+.errorMessage {
+  font-weight: bold;
+  color: red;
+}
