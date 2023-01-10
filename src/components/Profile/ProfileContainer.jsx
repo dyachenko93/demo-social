@@ -1,60 +1,40 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { connect } from "react-redux"
 import Profile from "./Profile"
 import { getProfile, getStatus, updateStatus, savePhoto, saveProfile } from '../../redux/profile-reducer'
-import { useLocation, useNavigate, useParams } from "react-router-dom"
-// import { withAuthRedirect } from "../../hoc/withAuthRedirect"
+import { useNavigate, useParams } from "react-router-dom"
 import { compose } from "redux"
 
-function withRouter(Component) {
-  function ComponentWithRouterProp(props) {
-      let location = useLocation();
-      let navigate = useNavigate();
-      let params = useParams();
-      return (
-          <Component
-              {...props}
-              router={{ location, navigate, params }}
-          />
-      );
-  }
+const ProfileContainer = props => {
+  let navigate = useNavigate();
+  let params = useParams();
 
-  return ComponentWithRouterProp;
-}
-
-class ProfileContainer extends React.Component {
-  refreshProfile() {
-    let userId = this.props.router.params.userId
-    if(!userId) {
-      userId = this.props.authUserId
-      if(!userId) {
-        this.props.router.navigate("/login")
+  const refreshProfile = () => {
+    let userId = params.userId
+    if (!userId) {
+      userId = props.authUserId
+      if (!userId) {
+        navigate("/login")
       }
     }
-    this.props.getProfile(userId)
-    this.props.getStatus(userId)
-  }
-  componentDidMount() {
-    this.refreshProfile()
+    props.getProfile(userId)
+    props.getStatus(userId)
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.status !== this.props.status) {
-      this.setState({ status: this.props.status })
-    }
-    if (prevProps.router.params.userId !== this.props.router.params.userId || prevProps.authUserId !== this.props.authUserId) {
-        this.refreshProfile();
-      }
-  }
+  useEffect(() => {
+    refreshProfile()
+  }, [])
 
-  render() {
-    return <Profile {...this.props}
-                    isOwner={!this.props.router.params.userId}
-                    profile={this.props.profile} 
-                    status={this.props.status} 
-                    updateStatus={this.props.updateStatus}
-                    savePhoto={this.props.savePhoto} />
-  }
+  useEffect(() => {
+    refreshProfile();
+  }, [params.userId, props.authUserId])
+
+  return <Profile {...props}
+                  isOwner={!params.userId}
+                  profile={props.profile}
+                  status={props.status}
+                  updateStatus={props.updateStatus}
+                  savePhoto={props.savePhoto} />
 }
 
 let mapStateToProps = (state) => ({
@@ -66,6 +46,5 @@ let mapStateToProps = (state) => ({
 
 export default compose(
   connect(mapStateToProps, { getProfile, getStatus, updateStatus, savePhoto, saveProfile }),
-  withRouter,
   // withAuthRedirect
 )(ProfileContainer)

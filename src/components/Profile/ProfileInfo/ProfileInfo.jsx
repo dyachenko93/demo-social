@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Preloader from '../../common/Preloader';
 import s from './ProfileInfo.module.css';
 import defaultAvatar from '../../../assets/images/user.jpg'
@@ -8,6 +8,11 @@ import ProfileDataForm from './ProfileDataForm';
 const ProfileInfo = ({ profile, status, updateStatus, isOwner, savePhoto, saveProfile }) => {
   let [editMode, setEditMode] = useState(false)
   let [errorEditProfile, setErrorEditProfile] = useState('')
+  
+  useEffect(() => {
+    setEditMode(false)
+  }, [profile])
+
   if (!profile) {
     return <Preloader />
   }

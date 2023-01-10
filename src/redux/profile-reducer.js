@@ -33,7 +33,7 @@ const profileReducer = (state = initial, action) => {
       return stateCopy;
     }
     case DELETE_POST: {
-      return { ...state, posts: state.posts.filter(p => p.id !== action.id)}
+      return { ...state, posts: state.posts.filter(p => p.id !== action.id) }
     }
     case SET_USER_PROFILE:
       return { ...state, profile: action.profile }
@@ -54,22 +54,35 @@ export const setStatus = (status) => ({ type: SET_STATUS, status })
 
 export const deletePost = (id) => ({ type: DELETE_POST, id })
 
-export const savePhotoSuccess = (photo) => ({ type: SET_PHOTO, photo})
+export const savePhotoSuccess = (photo) => ({ type: SET_PHOTO, photo })
 
 export const getProfile = (id) => async (dispatch) => {
-  const response = await profileApi.getProfile(id)
-  dispatch(setProfileData(response))
+  try {
+    const response = await profileApi.getProfile(id)
+    dispatch(setProfileData(response))
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 export const getStatus = (id) => async (dispatch) => {
-  const response = await profileApi.getStatus(id)
-  dispatch(setStatus(response))
+  try {
+    const response = await profileApi.getStatus(id)
+    dispatch(setStatus(response))
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 export const updateStatus = (status) => async (dispatch) => {
-  const response = await profileApi.updateStatus(status)
-  if (response.resultCode === 0) {
-    dispatch(setStatus(status))
+  try {
+    const response = await profileApi.updateStatus(status)
+    if (response.resultCode === 0) {
+      dispatch(setStatus(status))
+    }
+  } catch (error) {
+    //TODO handle with error
+    console.log(error)
   }
 }
 
